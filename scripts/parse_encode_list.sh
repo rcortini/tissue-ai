@@ -2,7 +2,7 @@
 
 # preliminaries
 datadir="../data"
-datafile="$datadir/test-encode-list.txt"
+datafile="$datadir/files.txt"
 metadata="$datadir/metadata.txt"
 
 # first line is the metadata: download
