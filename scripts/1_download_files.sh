@@ -13,6 +13,7 @@ datadir="../data"
 datafile="$datadir/files.txt"
 metadata="$datadir/metadata.txt"
 filtered="$datadir/filtered-files.txt"
+filtered_metadata="$datadir/filtered-metadata.txt"
 
 # first line is the metadata: download
 log_message "Downloading metadata"
@@ -38,3 +39,15 @@ log_message "Begin batch file download"
 xargs -L 1 curl -s -S -O -L < $filtered
 log_message "Done"
 cd $root_dir
+
+# filter metadata file
+log_message "Filtering metadata"
+# extract the first line of the metadata file
+head -n 1 $metadata > $filtered_metadata
+
+# extract the codes of the experiments we downloaded
+while read line; do
+  fname=${line##*/}
+  exp_name=$(echo $fname | sed -e s,.tsv,,)
+  grep $exp_name $metadata >> $filtered_metadata
+done < $filtered
