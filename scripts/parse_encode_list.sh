@@ -12,6 +12,7 @@ function log_message {
 datadir="../data"
 datafile="$datadir/files.txt"
 metadata="$datadir/metadata.txt"
+filtered="$datadir/filtered-files.txt"
 
 # first line is the metadata: download
 log_message "Downloading metadata"
@@ -22,11 +23,18 @@ curl -o $metadata $(head -n1 $datafile)
 to_download=$(grep "gene quantifications" $metadata | grep .tsv | awk '{ print $1 }')
 
 # the "to_download" list contains a series of files that correspond to URLs that
-# we can fetch then with cURL
+# we can fetch then with cURL. Let's write a list of files we want to dowlnoad.
+rm -f $filtered
 for id in $to_download; do
   file=$(grep $id $datafile)
-  log_message "EXPERIMENT ID: $id"
-  curl -L $file -o $datadir/$id.tsv
+  echo $file >> $filtered
 done
 
+# now we can do a batch download of the file list with a single invocation of
+# cURL
+root_dir=$(pwd)
+cd $datadir
+log_message "Begin batch file download"
+xargs -L 1 curl -s -S -O -L < $filtered
 log_message "Done"
+cd $root_dir
