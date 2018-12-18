@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source 0_general_tools.sh
+nthreads=16
 
 # parse command line
 if [ $# -lt 3 ]; then
@@ -54,9 +55,11 @@ while [ -e $fname ]; do
     if [ "$run_type" = "paired-ended" ]; then
       salmon quant -i $salmon_index -l A \
 	-1 ${runs[0]}.fastq.gz -2 ${runs[1]}.fastq.gz \
+	--threads $nthreads \
 	-o replicate-$count-quant --validateMappings > $salmon_log
     elif [ "$run_type" = "single-ended" ]; then
       salmon quant -i $salmon_index -l A \
+	--threads $nthreads \
 	-r ${runs[0]}.fastq.gz  \
 	-o replicate-$count-quant --validateMappings > $salmon_log
     fi

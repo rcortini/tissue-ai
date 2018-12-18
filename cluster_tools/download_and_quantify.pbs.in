@@ -1,0 +1,25 @@
+#!/bin/bash
+#$ -N @EXPERIMENT_NAME@ 
+#$ -l virtual_free=16G,h_rt=02:00:00
+#$ -e download_and_quantify.err
+#$ -o download_and_quantify.out
+#$ -q short-sl7
+#$ -cwd
+#$ -P prj005866
+
+# arguments
+tissue_ai_home="@TISSUE_AI_HOME@"
+experiment_dir="@EXPERIMENT_DIR@"
+metadata="@METADATA@"
+salmon_index="@SALMON_INDEX@"
+
+# build file names
+scripts_dir="$tissue_ai_home/scripts"
+download="$scripts_dir/3_download.sh"
+quantify="$scripts_dir/4_quantify.sh"
+
+# first step: download FASTQs
+bash -c "$download $experiment_dir" || exit 1
+
+# second step: quantify
+bash -c "$quantify $experiment_dir $metadata $salmon_index" || exit 1
