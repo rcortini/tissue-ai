@@ -45,17 +45,20 @@ while [ -e $fname ]; do
   # proceed to quant step only if everything is okay
   if [ $? -eq 0 ]; then
 
+    # log file
+    salmon_log="replicate-$count-salmon.log"
+
     # this step is the crucial one: notice that the LIB_TYPE argument (-l) given
     # to salmon has been chosen to A, so that salmon will try to automatically
     # figure out what type of library it is
     if [ "$run_type" = "paired-ended" ]; then
       salmon quant -i $salmon_index -l A \
 	-1 ${runs[0]}.fastq.gz -2 ${runs[1]}.fastq.gz \
-	-o replicate-$count-quant --validateMappings
+	-o replicate-$count-quant --validateMappings > $salmon_log
     elif [ "$run_type" = "single-ended" ]; then
       salmon quant -i $salmon_index -l A \
-	-1 ${runs[0]}.fastq.gz -2 ${runs[1]}.fastq.gz \
-	-o replicate-$count-quant --validateMappings
+	-r ${runs[0]}.fastq.gz  \
+	-o replicate-$count-quant --validateMappings > $salmon_log
     fi
    
   else
