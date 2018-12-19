@@ -24,4 +24,4 @@ quantify="$scripts_dir/4_quantify.sh"
 bash -c "$download $tissue_ai_home $experiment_dir $metadata" || exit 1
 
 # second step: quantify
-bash -c "$quantify $tissue_ai_home $experiment_dir $metadata $salmon_index" || exit 1
+bash -c "$quantify $tissue_ai_home $experiment_dir $metadata $salmon_index $nthreads" || exit 1
