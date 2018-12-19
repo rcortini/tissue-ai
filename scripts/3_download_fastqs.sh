@@ -29,7 +29,10 @@ while [ -e $fname ]; do
   
   # download
   for run in $runs; do
-    wget $run
+
+    # no-verbose option wget
+    wget -nv $run
+
   done
 
   # increment counter and file name
