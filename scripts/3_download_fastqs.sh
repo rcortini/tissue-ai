@@ -46,9 +46,11 @@ while [ -e $fname ]; do
   fi
 
   # iterate over all runs of the replicate
-  for run in ${runs[@]}; do
+  for i in ${!runs[@]}; do
 
-    echo $run
+    # get values of the array
+    run=${runs[i]}
+    run_url=${run_urls[i]}
 
     # check if files exist already
     run_fname="$run.fastq.gz"
@@ -65,12 +67,12 @@ while [ -e $fname ]; do
 	# if md5sum check failed on the file that already exists, then the most
 	# likely explanation is that it was an incomplete download. In this case
 	# we download it all over
-	wget -nv $run
+	wget -nv $run_url
       fi
     else
 
       # if it does not exist, we download it
-      wget -nv $run
+      wget -nv $run_url
 
       # after complete, we check for integrity
       do_md5sum_test $metadata $run
