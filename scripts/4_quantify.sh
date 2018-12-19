@@ -13,6 +13,7 @@ salmon_index=$4
 
 source $tissue_ai_home/scripts/0_general_tools.sh
 nthreads=16
+salmon=$tissue_ai_home/bin/salmon
 
 # cd to directory
 root_dir=$(pwd)
@@ -40,12 +41,12 @@ while [ -e $fname ]; do
   # to salmon has been chosen to A, so that salmon will try to automatically
   # figure out what type of library it is
   if [ "$run_type" = "paired-ended" ]; then
-    salmon quant -i $salmon_index -l A \
+    $salmon quant -i $salmon_index -l A \
       -1 ${runs[0]}.fastq.gz -2 ${runs[1]}.fastq.gz \
       --threads $nthreads \
       -o replicate-$count-quant --validateMappings > $salmon_log
   elif [ "$run_type" = "single-ended" ]; then
-    salmon quant -i $salmon_index -l A \
+    $salmon quant -i $salmon_index -l A \
       --threads $nthreads \
       -r ${runs[0]}.fastq.gz  \
       -o replicate-$count-quant --validateMappings > $salmon_log
