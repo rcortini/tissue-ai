@@ -13,19 +13,20 @@ function do_md5sum_test {
 }
 
 # parse command line
-if [ $# -lt 3 ]; then
-  echo "Usage: 3_download_fastqs.sh <tissue_ai_home> <experiment_dir> <metadata>" 1>&2
+if [ $# -lt 2 ]; then
+  echo "Usage: 3_download_fastqs.sh <tissue_ai_home> <experiment_name>" 1>&2
   exit 1
 fi
 
 tissue_ai_home=$1
-experiment_dir=$2
-metadata=$3
+experiment_name=$2
 
 source $tissue_ai_home/scripts/0_general_tools.sh
 
 # cd to directory
 root_dir=$(pwd)
+experiment_dir=$tissue_ai_home/data/experiments/$experiment_name
+metadata=$tissue_ai_home/data/metadata.txt
 cd $experiment_dir
 
 # init

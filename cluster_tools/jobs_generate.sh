@@ -1,16 +1,14 @@
 #!/bin/bash
 
 # parse command line
-if [ $# -ne 4 ]; then
-  echo "Usage: jobs_generate.sh <tissue_ai_home> <metadata> <salmon_index> <nthreads>" 1>&2
+if [ $# -ne 2 ]; then
+  echo "Usage: jobs_generate.sh <tissue_ai_home> <nthreads>" 1>&2
   exit 1
 fi
 
 # get parameters
 tissue_ai_home=$1
-metadata=$2
-salmon_index=$3
-nthreads=$4
+nthreads=$2
 
 # files
 experiments_dir="$tissue_ai_home/data/experiments"
@@ -27,10 +25,7 @@ for experiment_dir in $experiment_dirs; do
   pbs_out="$experiment_dir/download_and_quantify.pbs"
   cat $pbs_in |\
     sed -e s,"@EXPERIMENT_NAME@","$experiment_name",g |\
-    sed -e s,"@EXPERIMENT_DIR@","$experiment_dir",g |\
     sed -e s,"@TISSUE_AI_HOME@","$tissue_ai_home",g |\
-    sed -e s,"@METADATA@","$metadata",g |\
-    sed -e s,"@SALMON_INDEX@","$salmon_index",g |\
     sed -e s,"@NTHREADS@","$nthreads",g |\
   tee > $pbs_out
 
