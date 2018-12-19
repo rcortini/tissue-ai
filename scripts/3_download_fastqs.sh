@@ -14,7 +14,7 @@ function do_md5sum_test {
 
 # parse command line
 if [ $# -lt 3 ]; then
-  echo "Usage: download_and_quantify.sh <tissue_ai_home> <experiment_dir> <metadata>" 1>&2
+  echo "Usage: 3_download_fastqs.sh <tissue_ai_home> <experiment_dir> <metadata>" 1>&2
   exit 1
 fi
 
