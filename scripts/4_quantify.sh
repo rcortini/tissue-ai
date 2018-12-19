@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # parse command line
-if [ $# -lt 4 ]; then
-  echo "Usage: 4_quantify.sh <tissue_ai_home> <experiment_dir> <metadata> <salmon_index>" 1>&2
+if [ $# -lt 5 ]; then
+  echo "Usage: 4_quantify.sh <tissue_ai_home> <experiment_dir> <metadata> <salmon_index> <nthreads>" 1>&2
   exit 1
 fi
 
@@ -10,9 +10,9 @@ tissue_ai_home=$1
 experiment_dir=$2
 metadata=$3
 salmon_index=$4
+nthreads=$5
 
 source $tissue_ai_home/scripts/0_general_tools.sh
-nthreads=16
 salmon=$tissue_ai_home/bin/salmon
 
 # cd to directory

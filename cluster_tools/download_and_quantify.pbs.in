@@ -5,6 +5,7 @@
 #$ -o download_and_quantify.out
 #$ -q short-sl7
 #$ -cwd
+#$ -pe smp @NTHREADS@
 #$ -P prj005866
 
 # arguments
@@ -12,6 +13,7 @@ tissue_ai_home="@TISSUE_AI_HOME@"
 experiment_dir="@EXPERIMENT_DIR@"
 metadata="@METADATA@"
 salmon_index="@SALMON_INDEX@"
+nthreads=@NTHREADS@
 
 # build file names
 scripts_dir="$tissue_ai_home/scripts"
