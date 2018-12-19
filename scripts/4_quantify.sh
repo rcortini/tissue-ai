@@ -1,17 +1,18 @@
 #!/bin/bash
 
-source 0_general_tools.sh
-nthreads=16
-
 # parse command line
-if [ $# -lt 3 ]; then
-  echo "Usage: 4_quantify.sh <experiment_dir> <metadata> <salmon_index>" 1>&2
+if [ $# -lt 4 ]; then
+  echo "Usage: 4_quantify.sh <tissue_ai_home> <experiment_dir> <metadata> <salmon_index>" 1>&2
   exit 1
 fi
 
-experiment_dir=$1
-metadata=$2
-salmon_index=$3
+tissue_ai_home=$1
+experiment_dir=$2
+metadata=$3
+salmon_index=$4
+
+source $tissue_ai_home/scripts/0_general_tools.sh
+nthreads=16
 
 # cd to directory
 root_dir=$(pwd)
