@@ -60,7 +60,7 @@ while [ -e $fname ]; do
       # if test succeeded, it means that the file is already downloaded and we
       # can exit
       if [ $? -eq 0 ]; then
-	exit 0
+	continue
       else
 	# if md5sum check failed on the file that already exists, then the most
 	# likely explanation is that it was an incomplete download. In this case
