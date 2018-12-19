@@ -1,6 +1,6 @@
 #!/bin/bash
 #$ -N @EXPERIMENT_NAME@ 
-#$ -l virtual_free=16G,h_rt=02:00:00
+#$ -l virtual_free=16G,h_rt=05:00:00
 #$ -e download_and_quantify.err
 #$ -o download_and_quantify.out
 #$ -q short-sl7
