@@ -43,12 +43,12 @@ while [ -e $fname ]; do
     $salmon quant -i $salmon_index -l A \
       -1 ${runs[0]}.fastq.gz -2 ${runs[1]}.fastq.gz \
       --threads $nthreads \
-      -o replicate-$count-quant --validateMappings > $salmon_log
+      -o replicate-$count-quant --validateMappings 2>&1 > $salmon_log
   elif [ "$run_type" = "single-ended" ]; then
     $salmon quant -i $salmon_index -l A \
       --threads $nthreads \
       -r ${runs[0]}.fastq.gz  \
-      -o replicate-$count-quant --validateMappings > $salmon_log
+      -o replicate-$count-quant --validateMappings 2>&1 > $salmon_log
   fi
  
   # increment counter and file name
