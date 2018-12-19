@@ -12,6 +12,7 @@ nthreads=$3
 
 source $tissue_ai_home/scripts/0_general_tools.sh
 salmon=$tissue_ai_home/bin/salmon
+salmon_index=$tissue_ai_home/data/salmon_index
 
 # cd to directory
 root_dir=$(pwd)
