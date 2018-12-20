@@ -51,6 +51,13 @@ while [ -e $fname ]; do
       -r ${runs[0]}.fastq.gz  \
       -o replicate-$count-quant --validateMappings 2>&1 > $salmon_log
   fi
+
+  # delete the FASTQ files if last command succeeded
+  if [ $? -eq 0 ]; then
+    for run in ${runs[@]}; do
+      rm -f $run.fastq.gz
+    done
+  fi
  
   # increment counter and file name
   let count=count+1
