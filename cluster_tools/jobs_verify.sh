@@ -38,6 +38,7 @@ for experiment_dir in $experiment_dirs; do
 
       if [ "$submit" = "yes" ]; then
 	# launch job and write log
+	pbs=download_and_quantify.pbs
 	jid=$(qsub -terse $pbs)
 	echo "[`date +"%Y-%m-%d %H:%M:%S"`] : $experiment_name: $jid" >> $log
       fi
