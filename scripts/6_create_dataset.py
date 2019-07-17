@@ -1,4 +1,3 @@
-from __future__ import print_function
 import os, sys
 import pandas as pd
 
@@ -16,7 +15,7 @@ experiment_names = os.listdir(experiments_dir)
 experiment_names.remove('toy')
 
 # prepare the iteration over all the experiments
-quants = {}
+quants = pd.DataFrame()
 labels = {}
 for experiment_name in experiment_names :
     
@@ -32,23 +31,24 @@ for experiment_name in experiment_names :
     replicate_dir = "%s/replicate-%d-quant"%(experiment_dir, replicate_n)
     while os.path.exists(replicate_dir) :
         quant_fname = "%s/quant-by-gene.tsv"%(replicate_dir)
-        print(quant_fname)
 
         # increment the number of replicates
-        replicate_n += 1
         replicate_dir = "%s/replicate-%d-quant"%(experiment_dir, replicate_n)
+        exp_id = '%s-%d'%(experiment_name, replicate_n)
 
         # read the file and append it to our list
         quant = pd.read_csv(quant_fname, sep='\t')
-        exp_id = '%s-%d'%(experiment_name, replicate_n)
-        quants[exp_id] = quant['GeneTPM']
+        quants.loc[:, exp_id] = quant['GeneTPM']
         labels[exp_id] = tissue_id[0]
 
+        # increment replicate index
+        print(quant_fname)
+        replicate_n += 1
+
 # create a DataFrame that will contain the expression patterns, and save it
-df = pd.DataFrame(quants)
-df.set_index(quant['GeneID'])
-df.to_csv("%s/data/dataset.tsv"%(tissue_ai_rootdir), sep='\t')
+quants = quants.set_index(quant['GeneID'])
+quants.to_csv("%s/data/dataset.tsv"%(tissue_ai_rootdir), sep='\t')
 
 # and create the labels DataFrame, and save it
-df = pd.DataFrame(labels.items(), columns=['Experiment_ID', 'Tissue'])
+df = pd.DataFrame(list(labels.items()), columns = ['Experiment_ID', 'Tissue'])
 df.to_csv("%s/data/labels.tsv"%(tissue_ai_rootdir), sep='\t', index=False)
